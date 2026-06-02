@@ -3,25 +3,44 @@ name: GitHub Snake Game
 on:
   schedule:
     - cron: "0 0 * * *"
+
   workflow_dispatch:
 
-jobs:
-  generate:
-    permissions:
-      contents: write
+permissions:
+  contents: write
 
+jobs:
+  contribution:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Create Daily Contribution
+        run: |
+          echo "$(date)" >> activity.txt
+          git config user.name "Wadan3"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add activity.txt
+          git commit -m "Daily contribution" || exit 0
+          git push
+
+  generate:
+    needs: contribution
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
       - name: Generate Snake Animation
         uses: Platane/snk@v3
         with:
           github_user_name: Wadan3
           outputs: |
-            dist/github-snake.svg?color_snake=%233fb950
-            dist/github-snake-dark.svg?palette=github-dark&color_snake=%233fb950
+            dist/github-snake.svg?color_snake=%23ff4d4d
+            dist/github-snake-dark.svg?palette=github-dark&color_snake=%23ff4d4d
 
       - name: Push Snake Animation
         uses: crazy-max/ghaction-github-pages@v4
