@@ -1,6 +1,13 @@
-<h1 align="center">In the Name of the One and Only Architect</h1>
+<img src="https://capsule-render.vercel.app/api?type=waving&height=200&color=gradient&customColorList=6,11,20,29&text=By%20the%20Grace%20of%20Allah&fontSize=48&fontColor=fff&animation=twinkling&fontAlignY=35&desc=Computer%20Engineering%20Student%20at%20Amirkabir%20University%20of%20Technology%20(Tehran%20Polytechnic)&descSize=18&descAlignY=55&textBg=false"/>
+<p align="center">
+  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=20&duration=4000&pause=1000&color=00FF41&center=true&vCenter=true&width=650&lines=The%20world%20is%20a%20dreamscape!" alt="Typing introduction" />
+</p>
 
-   <img src="https://readme-typing-svg.herokuapp.com?color=E22FE4&width=380&height=28&lines=Salaam+I'm+Ab+Mosawer+Wadan..;Amir_Kabir_Polytechnic+Student;Open-Source+Enthusiast..;Learning+In+Public..;Empowering+Others;Nice+To+Meet+You+...&center=true"></a></p>
-   ![snake gif](https://github.com/Wadan3/Wadan3/blob/output/github-snake-dark.svg)
+<p align="center">
+  <img src="https://trophy.ryglcloud.net/?username=Wadan3&theme=tokyonight&no-frame=true&no-bg=true&margin-w=4&cache_seconds=86400" alt="By the Grace of Allah's GitHub Trophies" />
+</p>
 
+<div align="center">
+  <img src="https://user-images.githubusercontent.com/74038190/212284115-f47cd8ff-2ffb-4b04-b5bf-4d1c14c0247f.gif" alt="Bottom Line" width="100%" />
+</div>
 
