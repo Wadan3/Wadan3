@@ -2,7 +2,6 @@
 <p align="center">
   <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=20&duration=4000&pause=1000&color=00FF41&center=true&vCenter=true&width=650&lines=The%20world%20is%20a%20dreamscape!" alt="Typing introduction" />
 </p>
-
 <p align="center">
   <img src="https://trophy.ryglcloud.net/?username=Wadan3&theme=tokyonight&no-frame=true&no-bg=true&margin-w=4&cache_seconds=86400" alt="By the Grace of Allah's GitHub Trophies" />
 </p>
