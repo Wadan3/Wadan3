@@ -2,6 +2,8 @@ name: Auto Update README
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: "0 0 * * *"
 
 jobs:
   update-readme:
@@ -14,15 +16,23 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Update README
+      - name: Update README timestamp
         run: |
-          echo "" >> README.md
-          echo "<!-- Updated by GitHub Actions -->" >> README.md
+          DATE=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
+
+          if grep -q "<!-- LAST_UPDATED_START -->" README.md; then
+            sed -i "/<!-- LAST_UPDATED_START -->/,/<!-- LAST_UPDATED_END -->/c\\<!-- LAST_UPDATED_START -->\nLast updated: $DATE\n<!-- LAST_UPDATED_END -->" README.md
+          else
+            echo "" >> README.md
+            echo "<!-- LAST_UPDATED_START -->" >> README.md
+            echo "Last updated: $DATE" >> README.md
+            echo "<!-- LAST_UPDATED_END -->" >> README.md
+          fi
 
       - name: Commit changes
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add README.md
-          git commit -m "Update README automatically" || echo "No changes to commit"
+          git commit -m "Update README timestamp automatically" || echo "No changes to commit"
           git push
