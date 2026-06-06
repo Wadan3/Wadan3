@@ -3,19 +3,20 @@ name: Auto Update README
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 0 * * *"
+    - cron: "0 0 * * *"  # اجرای خودکار هر روز ساعت 00:00 UTC
 
 jobs:
   update-readme:
     runs-on: ubuntu-latest
-
     permissions:
       contents: write
 
     steps:
+      #  1: Checkout repository
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      #  2: Update README timestamp
       - name: Update README timestamp
         run: |
           DATE=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
@@ -31,8 +32,9 @@ jobs:
 
       - name: Commit changes
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "Wadan3"
+          git config user.email "vadarmosawer@gmail.com"
+
           git add README.md
           git commit -m "Update README timestamp automatically" || echo "No changes to commit"
-          git push
+          git push origin main
