@@ -1,9 +1,9 @@
-name: Auto Update README
+name: Auto Update README & Keep Graph Green
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 0 * * *"  # اجرای خودکار هر روز ساعت 00:00 UTC
+    - cron: "0 0,12 * * *"
 
 jobs:
   update-readme:
@@ -12,29 +12,29 @@ jobs:
       contents: write
 
     steps:
-      #  1: Checkout repository
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:  
+          fetch-depth: 0 
 
-      #  2: Update README timestamp
       - name: Update README timestamp
         run: |
           DATE=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
-
-          if grep -q "<!-- LAST_UPDATED_START -->" README.md; then
-            sed -i "/<!-- LAST_UPDATED_START -->/,/<!-- LAST_UPDATED_END -->/c\\<!-- LAST_UPDATED_START -->\nLast updated: $DATE\n<!-- LAST_UPDATED_END -->" README.md
+          if grep -q "" README.md; then
+            sed -i "//,//c\\nLast updated: $DATE\n" README.md
           else
-            echo "" >> README.md
-            echo "<!-- LAST_UPDATED_START -->" >> README.md
-            echo "Last updated: $DATE" >> README.md
-            echo "<!-- LAST_UPDATED_END -->" >> README.md
+            echo -e "\n\nLast updated: $DATE\n" >> README.md
           fi
 
-      - name: Commit changes
+      - name: Commit and Push changes
         run: |
           git config user.name "Wadan3"
-          git config user.email "vadarmosawer@gmail.com"
+          git config user.email "vadanmosawer@gmail.com"
 
           git add README.md
-          git commit -m "Update README timestamp automatically" || echo "No changes to commit"
-          git push origin main
+          if ! git diff-index --quiet HEAD; then
+            git commit -m "chore: Auto-update README timestamp"
+            git push origin main
+          else
+            echo "No changes to commit"
+          fi
