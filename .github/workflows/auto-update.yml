@@ -14,24 +14,43 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:  
+        with:
           fetch-depth: 0 
 
       - name: Update README timestamp
+        shell: python
         run: |
-          DATE=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
-          if grep -q "" README.md; then
-            sed -i "//,//c\\nLast updated: $DATE\n" README.md
-          else
-            echo -e "\n\nLast updated: $DATE\n" >> README.md
-          fi
+          import re
+          from datetime import datetime, timezone
+          
+          start_tag = "<" + "!-- LAST_UPDATED_START --" + ">"
+          end_tag = "<" + "!-- LAST_UPDATED_END --" + ">"
+          date_str = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
+          
+          try:
+              with open("README.md", "r", encoding="utf-8") as f:
+                  content = f.read()
+          except FileNotFoundError:
+              content = ""
+              
+          pattern = start_tag + r".*?" + end_tag
+          replacement = f"{start_tag}\nLast updated: {date_str}\n{end_tag}"
+          
+          if start_tag in content:
+              new_content = re.sub(pattern, replacement, content, flags=re.DOTALL)
+          else:
+              new_content = content.strip() + "\n\n" + replacement
+              
+          with open("README.md", "w", encoding="utf-8") as f:
+              f.write(new_content)
 
       - name: Commit and Push changes
         run: |
           git config user.name "Wadan3"
           git config user.email "vadanmosawer@gmail.com"
-
+          
           git add README.md
+          
           if ! git diff-index --quiet HEAD; then
             git commit -m "chore: Auto-update README timestamp"
             git push origin main
